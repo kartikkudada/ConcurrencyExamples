@@ -7,7 +7,7 @@ public class LatchesExample {
 
 	public static void main(String[] args) throws InterruptedException {
 
-		CountDownLatch latch = new CountDownLatch(1);
+		CountDownLatch latch = new CountDownLatch(3);
 
 		Waiter      waiter      = new Waiter(latch);
 		Decrementer decrementer = new Decrementer(latch);
@@ -49,9 +49,19 @@ class Decrementer implements Runnable {
 
         try {
             Thread.sleep(1000);
-            this.latch.countDown();
+            latch.countDown();
             
-            System.out.println("countdown of latch");
+            System.out.println("countdown of latch 1");
+            Thread.sleep(1000);
+            latch.countDown();
+            
+            System.out.println("countdown of latch 2");
+            Thread.sleep(1000);
+            latch.countDown();
+            
+            System.out.println(latch.getCount());
+            
+            System.out.println("countdown of latch 3");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
